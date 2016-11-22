@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <algorithm>
+#include <vector>
 class leguma {
 protected:
 	std::string nume;
@@ -10,7 +12,11 @@ public:
 	
 
 	virtual void afisare() {
-		std::cout << this;
+		std::cout << nume << "\n";
+	}
+
+	 std::string  get_nume()const {
+		return nume;
 	}
 };
 
@@ -43,16 +49,51 @@ public:
 		std::cout << nume << " " << x <<" "<< y<<"\n";
 	}
 };
+
+
+bool comparator(leguma *a, leguma *b) {
+	if (a->get_nume().compare(b->get_nume()) < 1)
+		return 1;
+	else
+		return 0;
+}
+
 int main() {
-	leguma l1{ "leguma 1" };
-	leguma l2{ "leguma 2" };
-	mar m1{ "mar 1",1 };
-	mar m2{ "mar 2",2 };
-	para p1{ "para 1",3,3 };
-	para p2{ "para 2",4,4 };
+	
+	leguma* l1=new leguma{ "leguma 1" };
+	leguma* l2=new leguma{ "leguma 2" };
+	mar *m1=new mar{ "mar 1",1 };
+	mar *m2=new mar{ "mar 2",2 };
+	para *p1=new para{ "para 1",3,3 };
+	para *p2=new para{ "para 2",4,4 };
 
 
-	std::cout << l1 << " " << l2;
+
+
+
+	/*std::string a = "af4asdasdga1";
+
+	std::sort(a.begin(), a.end());
+	std::cout << a;
+*/
+
+	std::vector<leguma*> vect = { m1,l2,p1,p2,l1,m2 };
+
+
+	//std::sort(vect.begin(), vect.end(), [=](const leguma *a,const leguma *b) {
+	//	if (a->get_nume().compare(b->get_nume()) < 1)
+	//		return 1;
+	//	else
+	//		return 0;
+	//});
+
+	std::sort(vect.begin(), vect.end(),comparator);
+
+
+	//std::sort(vect.begin(), vect.end());
+
+	for (auto x : vect)
+		x->afisare();
 
 
 	int x;
